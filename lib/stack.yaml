@@ -1,9 +1,10 @@
-resolver: lts-13.5
+resolver:
+  url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/18/24.yaml
 
 ghc-options:
   servant-ts: -Wall -O0 -fwarn-tabs -fno-warn-orphans
 
 extra-deps: true
 extra-deps:
-- git: https://github.com/smaccoun/aeson-generic-ts.git
-  commit: 0381cbda2845d4cb090569c4d813cf75c5bd11ac
+  - git: https://github.com/smaccoun/aeson-generic-ts.git
+    commit: 0381cbda2845d4cb090569c4d813cf75c5bd11ac

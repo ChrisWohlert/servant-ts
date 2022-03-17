@@ -11,12 +11,21 @@ import           Servant.Foreign     (Foreign, GenerateList, HasForeign,
 import           Typescript
 
 data User = User
-    {name    :: Text
-    ,age     :: Int
-    ,isAdmin :: Bool
-    ,hasMI   :: Maybe Text
-    } deriving (Generic, TypescriptType)
+  { userId        :: Int
+  , userFirstName :: Text
+  , userLastName  :: Text
+  } deriving (Eq, Show, Generic, TypescriptType)
 
+data Team = Team {
+  -- | The players on the team
+  players :: [Player],
+  teamName :: Text
+  } deriving (Eq, Show, Generic, TypescriptType)
 
-type SimpleAPI = "user" :> Get '[JSON] [User]
-              :<|> "user" :> Capture "userId" Int :> Get '[JSON] User
+data Player = Player {
+  playerName :: Text,
+  playerRank :: Int
+  } deriving (Eq, Show, Generic, TypescriptType)
+
+type API = "users" :> Get '[JSON] Text
+      :<|> "hold" :> Get '[JSON] Text

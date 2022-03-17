@@ -18,6 +18,7 @@ import Data.Text.Prettyprint.Doc
 import ServantTS.Output.Docs
 import ServantTS.Output.RequestFlavors.Fetch (Fetch)
 import Dhall hiding (sequence)
+import Data.Text
 
 
 data Example =
@@ -30,12 +31,10 @@ instance FromDhall Example
 
 main :: IO ()
 main = do
-  f <- (input auto "./mkdocs/README.md.template") :: IO (Example -> Text)
-  writeFile "../README.md" $ T.unpack (f config)
-  print "FINISHED WRITING FILE"
-  print $ f config
+  print $ show (apiToTypeDeclarationDoc asTS)
+  genTypes "test.ts"
  where
-  asTS         = servantToReqTS (Proxy :: Proxy FpTs) (Proxy :: Proxy SimpleAPI)
+  asTS         = servantToReqTS (Proxy :: Proxy Vanilla) (Proxy :: Proxy API)
   reqToTSFunction = defaultReqToTSFunction (Proxy @Fetch)
   config = Example
        {decFile = T.pack $ show (apiToTypeDeclarationDoc asTS)
@@ -43,3 +42,11 @@ main = do
        }
 
 
+
+
+genTypes path = do
+    writeFile path . unpack $ Data.Text.unlines
+      [ mkTypescriptDeclaration (Proxy :: Proxy Vanilla) (Proxy :: Proxy User)
+      , mkTypescriptDeclaration (Proxy :: Proxy Vanilla) (Proxy :: Proxy Team)
+      , mkTypescriptDeclaration (Proxy :: Proxy Vanilla) (Proxy :: Proxy Player)
+      ]
