@@ -1,8 +1,4 @@
-interface User { 
-  userId : number
-  userFirstName : string
-  userLastName : string
-}
+Array<User>
 interface Team { 
   players : Array<Player>
   teamName : string

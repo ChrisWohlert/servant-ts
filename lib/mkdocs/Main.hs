@@ -46,7 +46,7 @@ main = do
 
 genTypes path = do
     writeFile path . unpack $ Data.Text.unlines
-      [ mkTypescriptDeclaration (Proxy :: Proxy Vanilla) (Proxy :: Proxy User)
+      [ mkTypescriptDeclaration (Proxy :: Proxy Vanilla) (Proxy :: Proxy [User])
       , mkTypescriptDeclaration (Proxy :: Proxy Vanilla) (Proxy :: Proxy Team)
       , mkTypescriptDeclaration (Proxy :: Proxy Vanilla) (Proxy :: Proxy Player)
       ]
